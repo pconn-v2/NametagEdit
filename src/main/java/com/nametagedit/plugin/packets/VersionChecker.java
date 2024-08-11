@@ -73,6 +73,8 @@ public class VersionChecker {
             bukkitVersion = BukkitVersion.v1_20_6;
         else if (version.contains("(MC: 1.21)"))
             bukkitVersion = BukkitVersion.v1_21;
+        else if (version.contains("(MC: 1.21.1)"))
+            bukkitVersion = BukkitVersion.v1_21_1;
         else
             bukkitVersion = null;
     }
@@ -89,8 +91,8 @@ public class VersionChecker {
     @AllArgsConstructor
     public enum BukkitVersion {
         v1_8_R1, v1_8_R2, v1_8_R3, v1_9_R1, v1_9_R2, v1_10_R1, v1_11_R1, v1_12_R1, v1_13_R1, v1_13_R2, v1_14_R1, v1_14_R2, v1_15_R1, v1_16_R1, v1_16_R2, v1_16_R3, v1_17_R1, v1_18_R1, v1_19_R1, v1_19_R2, v1_19_R3, v1_20_R1, v1_20_R2, v1_20_R3,
-        v1_20_5(PacketData.v1_20_5_6), v1_20_6(PacketData.v1_20_5_6),
-        v1_21(PacketData.v1_21);
+        v1_20_5(PacketData.v1_20_5), v1_20_6(PacketData.v1_20_5),
+        v1_21(PacketData.v1_21), v1_21_1(PacketData.v1_21);;
 
         private final PacketData packetData;
 
