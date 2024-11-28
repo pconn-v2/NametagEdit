@@ -16,6 +16,7 @@ class PacketAccessor {
     protected static final String CRAFT_BUKKIT_PACKAGE = Bukkit.getServer().getClass().getPackage().getName();
     protected static final String VERSION = Bukkit.getBukkitVersion().split("-")[0];
     protected static final int MINOR_VERSION = Integer.parseInt(VERSION.split("\\.")[1]);
+    protected static final int PATCH_VERSION = Integer.parseInt(VERSION.split("\\.")[2]);
 
     private static final List<String> legacyVersions = Arrays.asList(
             "1.7.2", "1.7.4", "1.7.5", "1.7.6", "1.7.7", "1.7.8", "1.7.9", "1.7.10",
@@ -99,13 +100,18 @@ class PacketAccessor {
                 packetParamsClass = Class.forName("net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b");
                 Class<?> typeNMSPlayer = Class.forName("net.minecraft.server.level.EntityPlayer");
                 Class<?> typePlayerConnection = Class.forName("net.minecraft.server.network.PlayerConnection");
-                if (MINOR_VERSION >= 20) {
+
+                if (MINOR_VERSION >= 21 && PATCH_VERSION >= 2) {
+                    // 1.21.2+
+                    playerConnection = typeNMSPlayer.getField("f");
+                } else if (MINOR_VERSION >= 20) {
                     // 1.20+
                     playerConnection = typeNMSPlayer.getField("c");
                 } else {
                     // 1.17-1.19
                     playerConnection = typeNMSPlayer.getField("b");
                 }
+
                 Class<?>[] sendPacketParameters = new Class[]{Class.forName("net.minecraft.network.protocol.Packet")};
                 sendPacket = Stream.concat(
                                 Arrays.stream(typePlayerConnection.getSuperclass().getMethods()), // 1.20.2+ priority to packet sending
