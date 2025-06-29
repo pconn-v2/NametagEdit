@@ -13,6 +13,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +26,7 @@ public class Utils {
     }
 
     public static String deformat(String input) {
-        return ChatColor.stripColor(input);
+        return input.replace("§", "&");
     }
 
     public static String format(String input) {
@@ -36,11 +37,11 @@ public class Utils {
         String colored = color(input);
 
         switch (VersionChecker.getBukkitVersion()) {
-            case v1_13_R1: case v1_14_R1: case v1_14_R2: case v1_15_R1: case v1_16_R1:
-            case v1_16_R2: case v1_16_R3: case v1_17_R1: case v1_18_R1: case v1_19_R1:
-                return limitChars && colored.length() > 256 ? colored.substring(0, 256) : colored;
-            default:
+            case v1_8_R1: case v1_8_R2: case v1_8_R3: case v1_9_R1: case v1_9_R2:
+            case v1_10_R1: case v1_11_R1: case v1_12_R1:
                 return limitChars && colored.length() > 16 ? colored.substring(0, 16) : colored;
+            default:
+                return limitChars && colored.length() > 256 ? colored.substring(0, 256) : colored;
         }
     }
 
@@ -115,12 +116,7 @@ public class Utils {
     }
 
     public static String generateUUID() {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 5; i++) {
-            builder.append(chars.charAt((int) (Math.random() * chars.length())));
-        }
-        return builder.toString();
+        return UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
 
 }

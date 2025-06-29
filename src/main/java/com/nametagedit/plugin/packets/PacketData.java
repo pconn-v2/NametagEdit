@@ -21,7 +21,10 @@ enum PacketData {
     v1_16("h", "c", "d", "a", "i", "j", "b", "g", "f", "e", "NA"),
     v1_17("j", "b", "c", "i", "h", "g", "a", "f", "e", "d", "k"),
     v1_18("j", "b", "c", "i", "h", "g", "a", "f", "e", "d", "k"),
-    v1_19("j", "b", "c", "i", "h", "g", "a", "f", "e", "d", "k");
+    v1_19("j", "b", "c", "i", "h", "g", "a", "f", "e", "d", "k"),
+    v1_20("j", "b", "c", "i", "h", "g", "a", "f", "e", "d", "k"),
+    v1_20_5("k", "b", "c", "j", "i", "g", "a", "f", "e", "d", "l"),
+    v1_21("k", "b", "c", "j", "i", "g", "a", "f", "e", "d", "l");
 
     private final String members;
     private final String prefix;

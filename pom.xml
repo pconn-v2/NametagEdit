@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.nametagedit</groupId>
     <artifactId>nametagedit</artifactId>
-    <version>4.5.8</version>
+    <version>4.5.24</version>
     <packaging>jar</packaging>
     <name>NametagEdit</name>
     <url>https://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spigot.version>1.18.2-R0.1-SNAPSHOT</spigot.version>
+        <spigot.version>1.21.4-R0.1-SNAPSHOT</spigot.version>
     </properties>
     <dependencies>
         <!--Spigot -->
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
-            <version>2.10.9</version>
+            <version>2.11.6</version>
             <scope>provided</scope>
         </dependency>
         <!-- HikariCP -->
@@ -58,14 +58,14 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>1.18.34</version>
             <scope>provided</scope>
         </dependency>
         <!-- Google Guava API -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.0.1-jre</version>
+            <version>32.0.0-jre</version>
         </dependency>
         <!-- bStats -->
         <dependency>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>me.glaremasters</groupId>
             <artifactId>guilds</artifactId>
-            <version>3.5.6.4-SNAPSHOT</version>
+            <version>3.5.6.6-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- LibsDisguises -->
@@ -112,6 +112,12 @@
             <version>10.0.25</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/LibsDisguises-10.0.25.jar</systemPath>
+        </dependency>
+        <!-- Aikar -->
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-paper</artifactId>
+            <version>0.5.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <repositories>
@@ -128,22 +134,22 @@
         <!-- Clip Repo -->
         <repository>
             <id>placeholderapi</id>
-            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+            <url>https://repo.extendedclip.com/releases/</url>
         </repository>
         <!-- bStats -->
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-        <!-- Glare Repo -->
-        <repository>
-            <id>guilds</id>
-            <url>https://repo.glaremasters.me/repository/public/</url>
-        </repository>
         <!-- Aikar Repo -->
         <repository>
             <id>aikar</id>
             <url>https://repo.aikar.co/content/groups/aikar/</url>
+        </repository>
+        <!-- Glare Repo -->
+        <repository>
+            <id>guilds</id>
+            <url>https://repo.glaremasters.me/repository/public/</url>
         </repository>
     </repositories>
     <!-- Builds NametagEdit -->
@@ -154,7 +160,7 @@
         <resources>
             <resource>
                 <targetPath>.</targetPath>
-                <filtering>false</filtering>
+                <filtering>true</filtering>
                 <directory>${basedir}/src/main/resources/</directory>
                 <includes>
                     <include>*.*</include>
@@ -162,11 +168,27 @@
             </resource>
         </resources>
         <plugins>
+            <!-- Filter values in resources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.shared</groupId>
+                        <artifactId>maven-filtering</artifactId>
+                        <version>3.3.2</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
             <!-- Shade all Libs -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -181,6 +203,7 @@
                                     <include>org.slf4j:*</include>
                                     <include>com.zaxxer:*</include>
                                     <include>org.bstats.bStats-Metrics:*</include>
+                                    <include>co.aikar:*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -190,16 +213,19 @@
             <!-- Make a Jar -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.12.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.4.2</version>
             </plugin>
         </plugins>
     </build>
